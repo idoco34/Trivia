@@ -14,13 +14,18 @@ DATA_DELIMITER = "#"  # Delimiter in the data part of the message
 PROTOCOL_CLIENT = {
 "login_msg" : "LOGIN",
 "logout_msg" : "LOGOUT",
-"login_failed_msg" : "ERROR"
+"login_failed_msg" : "ERROR",
+"get_score" : "MY_SCORE",
+"score" : "YOUR_SCORE",
+"get_high_score" : "ALL_SCORE"
 } # .. Add more commands if needed
 
 
 PROTOCOL_SERVER = {
 "login_ok_msg" : "LOGIN_OK",
-"login_failed_msg" : "ERROR"
+"login_failed_msg" : "ERROR",
+"score" : "YOUR_SCORE",
+"get_high_score" : "HIGHSCORE"
 } # ..  Add more commands if needed
 
 
@@ -41,7 +46,7 @@ def is_string_int(s):
 
 
 def build_message(cmd, data):
-	if cmd not in PROTOCOL_CLIENT.values():
+	if cmd not in PROTOCOL_CLIENT.values() and  cmd not in PROTOCOL_SERVER.values():
 		return ERROR_RETURN
 	i = len(cmd)
 	spaces = CMD_FIELD_LENGTH-i

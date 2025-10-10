@@ -45,8 +45,8 @@ def error_and_exit(error_msg):
 
 def login(conn):
     while True:
-        username = input("Please enter username: \n")
-        password = input("please enter password: \n")
+        username = "test" # input("Please enter username: \n")
+        password = "test" # input("please enter password: \n")
         if username == "QUIT" and password == "QUIT":
             print("LOGIN FAILED \n")
             return
@@ -60,9 +60,36 @@ def login(conn):
 def logout(conn):
     build_and_send_message(conn, chatlib.PROTOCOL_CLIENT["logout_msg"],"")
 
+def build_send_recv_parse(conn, cmd, data):
+    build_and_send_message(conn, cmd, data)
+    return recv_message_and_parse(conn)
+
+def get_score(conn):
+    score = build_send_recv_parse(conn, chatlib.PROTOCOL_CLIENT["get_score"], "")
+    #print(score)
+    if score[0] == "ERROR":
+        error_and_exit("AN ERROR OCCURRED GETTING SCORE: EXITING")
+    return int(score[1])
+
+def get_highscore(conn):
+    high_score = build_send_recv_parse(conn, chatlib.PROTOCOL_SERVER["get_high_score"], "")
+    return high_score[1]
+
+
 def main():
     conn = connect()
     login(conn)
+
+    while True:
+        cmd = input("enter command \n")
+        if cmd == "exit":
+            break
+        elif cmd == "score":
+            print(get_score(conn))
+        elif cmd == "hs":
+            print(get_highscore(conn))
+        else:
+            print("INVALID COMMAND \n")
     logout(conn)
     conn.close()
 
