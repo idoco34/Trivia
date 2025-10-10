@@ -1,6 +1,7 @@
 import socket
 import  time
 from datetime import datetime
+import random
 
 
 server_socket = socket.socket()
@@ -13,12 +14,14 @@ print("Client connected")
 while True:
     data = client_socket.recv(1024).decode()
     print("Client sent: " + data)
-    if data == "quit":
-        data = "bye"
+    if data == "QUIT":
+        data = "BYE"
         client_socket.send(data.encode())
         break
     elif data == "TIME":
        data = str(datetime.now())
+    elif data == "RANDOM":
+        data = str(random.randint(1, 10))
     else:
         data = data.upper() + "!!!"
     client_socket.send(data.encode())
