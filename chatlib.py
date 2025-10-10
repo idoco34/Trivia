@@ -13,7 +13,8 @@ DATA_DELIMITER = "#"  # Delimiter in the data part of the message
 
 PROTOCOL_CLIENT = {
 "login_msg" : "LOGIN",
-"logout_msg" : "LOGOUT"
+"logout_msg" : "LOGOUT",
+"login_failed_msg" : "ERROR"
 } # .. Add more commands if needed
 
 
